@@ -1,0 +1,28 @@
+steps:
+  # Run 
+  - name: golang:1.21.3
+    entrypoint: /bin/bash
+    args: 
+      - -c
+      - |
+        go install github.com/Kanivin/ivi-onboarding/@main
+        2>&1 go test -timeout 1m          
+
+  # Docker Build
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 
+           'asia-east1-docker.pkg.dev/dev-prj-ivi-ondc/kanivin/ivi-onboarding:1.0', '.']
+
+  # Docker push to Google Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'asia-east1-docker.pkg.dev/dev-prj-ivi-ondc/kanivin/ivi-onboarding:1.0']
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['run', 'deploy', 'ivi-onboarding', 
+           '--image=asia-east1-docker.pkg.dev/dev-prj-ivi-ondc/kanivin/ivi-onboarding:1.0', 
+           '--region', 'asia-east1', '--platform', 'managed',
+           --allow-unauthenticated, --min-instances=0, --max-instances=1]
+
+images:
+  - asia-east1-docker.pkg.dev/dev-prj-ivi-ondc/kanivin/ivi-onboarding:1.0
