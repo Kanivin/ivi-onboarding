@@ -1,8 +1,8 @@
 {
   "projectID": "dev-prj-ivi-ondc",
   "secretID": "key",  
-  "RegistryEncryptPubKey": "https://Staging.registry.ondc.org/ondc",  
-  "RequestID": "", 
+  "RegistryEncryptPubKey": "MCowBQYDK2VuAyEAduMuZgmtpjdCuxv+Nc49K0cB6tL/Dj3HZetvVN7ZekM=",  
+  "RequestID": "ccfce174-17c1-5ca6-a070-75769f5df2a66", 
   "ONDCEnvironment": "Staging",
   "PORT": 8080
 }
